@@ -33,6 +33,5 @@ class Finish : AppCompatActivity() {
             startActivity(i)
             finish()
         }
-
     }
 }

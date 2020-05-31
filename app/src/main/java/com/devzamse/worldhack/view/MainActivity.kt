@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var home: ImageView
     private lateinit var profile: ImageView
     private lateinit var frame: FrameLayout
+    private var count: Int = 0
     private lateinit var personName: String
     private lateinit var personEmail: String
     private lateinit var personId: String
@@ -80,13 +81,33 @@ class MainActivity : AppCompatActivity() {
     private fun OnClickEvents(home: ImageView?, profile: ImageView?, centerbotom: ConstraintLayout) {
         home?.setOnClickListener{
             //ContentView
-            val frag: Fragment = Favorites()
-            val fragMan: FragmentManager = supportFragmentManager
-            val fragTran: FragmentTransaction = fragMan.beginTransaction()
+            count += 1
+            if(count == 1){
+                val frag: Fragment = Favorites()
+                val fragMan: FragmentManager = supportFragmentManager
+                val fragTran: FragmentTransaction = fragMan.beginTransaction()
 
-            fragTran.replace(R.id.frame, frag)
-            fragTran.addToBackStack(null)
-            fragTran.commit()
+                val args = Bundle()
+                args.putString("cuenta","1")
+                frag.arguments = args
+
+                fragTran.replace(R.id.frame, frag)
+                fragTran.addToBackStack(null)
+                fragTran.commit()
+            } else{
+
+                val frag: Fragment = Favorites()
+                val fragMan: FragmentManager = supportFragmentManager
+                val fragTran: FragmentTransaction = fragMan.beginTransaction()
+
+                val args = Bundle()
+                args.putString("cuenta","2")
+                frag.arguments = args
+
+                fragTran.replace(R.id.frame, frag)
+                fragTran.addToBackStack(null)
+                fragTran.commit()
+            }
 
             home.setColorFilter(getColor(R.color.red))
             profile?.setColorFilter(getColor(R.color.plomo))

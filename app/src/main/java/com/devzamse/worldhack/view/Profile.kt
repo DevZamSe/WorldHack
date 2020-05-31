@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.devzamse.worldhack.view.Login
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.tasks.OnCompleteListener
 
@@ -50,7 +51,7 @@ class Profile : Fragment() {
 
         logOut = view.findViewById(R.id.button)
         logOut.setOnClickListener {
-            signOut()
+            signOuts()
         }
 
 
@@ -59,9 +60,37 @@ class Profile : Fragment() {
     }
 
     private fun signOut() {
-        mGoogleSignInClient!!.signOut().addOnCompleteListener(activity!!, OnCompleteListener<Void?> {
-                startActivity(Intent(context, Splash::class.java))
+//        mGoogleSignInClient!!.signOut().addOnCompleteListener(activity!!) {
+//            startActivity(Intent(context, Login::class.java))
+//            activity!!.finishAffinity()
+//        }
+
+        mGoogleSignInClient!!.signOut()
+            .addOnCompleteListener(activity!!, OnCompleteListener<Void?> {
+                Toast.makeText(
+                    context,
+                    "Successfully signed out",
+                    Toast.LENGTH_SHORT
+                ).show()
+                startActivity(Intent(activity!!.baseContext, Login::class.java))
                 activity!!.finish()
+            })
+
+    }
+
+    private fun signOuts() {
+        mGoogleSignInClient!!.signOut()
+            .addOnCompleteListener(activity!!, OnCompleteListener<Void?> {
+                val i = Intent(context, Login::class.java)
+                startActivity(i)
+                activity!!.finish()
+            })
+    }
+
+    private fun revokeAccess() {
+        mGoogleSignInClient!!.revokeAccess()
+            .addOnCompleteListener(activity!!, OnCompleteListener<Void?> {
+                // ...
             })
     }
 
